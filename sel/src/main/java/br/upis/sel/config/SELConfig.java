@@ -20,6 +20,11 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
+/**
+ * 
+ * @author THIAGO
+ *
+ */
 @Configuration
 @ComponentScan(basePackages = {"br.upis.sel.model.*", "br.upis.sel.controller.*", "br.upis.sel.view.mb"})
 @EnableJpaRepositories(basePackages = {"br.upis.sel.model.dao"}, entityManagerFactoryRef="entityManagerFactory", transactionManagerRef = "transactionManager")
@@ -29,6 +34,11 @@ public class SELConfig {
 	private static final String ENTITY_PACKAGE = "br.upis.sel.model.entity";
 	private static final String DRIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
 	private static final String SCHEMA_URL = "jdbc:mysql://localhost:3306/pi2project-db";
+	private static final String DB_USER = "root";
+	
+	//Senha pode variar de acordo com o ambiente
+//	private static final String DB_PASSWORD = "root";
+	private static final String DB_PASSWORD = "1234";
 
 	//Spring JPA
 	@Bean(name = "entityManagerFactory")
@@ -49,8 +59,8 @@ public class SELConfig {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName(DRIVER_CLASS_NAME);
 		dataSource.setUrl(SCHEMA_URL);
-		dataSource.setUsername("root");
-		dataSource.setPassword("root");
+		dataSource.setUsername(DB_USER);
+		dataSource.setPassword(DB_PASSWORD);
 		return dataSource;
 	}
 
