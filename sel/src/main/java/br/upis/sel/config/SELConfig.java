@@ -1,11 +1,14 @@
 package br.upis.sel.config;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.CustomScopeConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -20,13 +23,15 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import br.upis.sel.util.ViewScope;
+
 /**
  * 
  * @author THIAGO
  *
  */
 @Configuration
-@ComponentScan(basePackages = {"br.upis.sel.model.*", "br.upis.sel.controller.*", "br.upis.sel.view.mb"})
+@ComponentScan(basePackages = {"br.upis.sel.model.entity", "br.upis.sel.controller.*", "br.upis.sel.view.mb"})
 @EnableJpaRepositories(basePackages = {"br.upis.sel.model.dao"}, entityManagerFactoryRef="entityManagerFactory", transactionManagerRef = "transactionManager")
 @Import(value = { SELMvcConfig.class, SELSecurityConfig.class})
 public class SELConfig {
@@ -88,4 +93,15 @@ public class SELConfig {
 		return properties;
 	}
 	
+	
+	//Customizando a View Scope para Spring
+	@Bean
+	public CustomScopeConfigurer getCustomScope() {
+		CustomScopeConfigurer configurer = new CustomScopeConfigurer();
+		Map<String, Object> customScopes = new HashMap<String, Object>();
+		customScopes.put("view", new ViewScope());
+		configurer.setScopes(customScopes);
+		
+		return configurer;
+	}
 }
