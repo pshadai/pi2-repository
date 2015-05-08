@@ -137,13 +137,17 @@ public class Application implements CommandLineRunner {
 			perfilDAO.save(new Perfil(PerfilDescricao.ROLE_ARREMATANTE));
 			perfis = Lists.newArrayList(perfilDAO.findAll());
 		}
-		String senha = "admin";
-		
-		ShaPasswordEncoder encoder = new ShaPasswordEncoder(256);
-		String cripto = encoder.encodePassword(senha, null);
-		System.out.println(senha);
-		
-		participanteDAO.save(new Participante("Administrador Teste", cripto, "54753133184", ParticipanteStatus.ATIVO, perfis));
+    	
+    	for (Perfil perfil : perfis) {
+			System.out.println(perfil.getDescricao());
+		}
+//		String senha = "admin";
+//		
+//		ShaPasswordEncoder encoder = new ShaPasswordEncoder(256);
+//		String cripto = encoder.encodePassword(senha, null);
+//		System.out.println(senha);
+//		
+//		participanteDAO.save(new Participante("Administrador Teste", cripto, "54753133184", ParticipanteStatus.ATIVO, perfis));
     }
 
 }
