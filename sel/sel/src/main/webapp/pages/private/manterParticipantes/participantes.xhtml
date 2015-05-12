@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="conteudo">
+		<div class="row">
+			<h:form id="formPesquisa">
+				<p:panelGrid columns="2">
+					<h:outputLabel value="Nome: " />
+					<p:inputText id="campoPesquisaNome" value="#{manterParticipanteMB.pesquisaNome}" />
+
+					<h:outputLabel value="CPF: " />
+					<p:inputText id="campoPesquisaCPF" value="#{manterParticipanteMB.pesquisaCPF}" />
+
+					<p:commandButton value="Pesquisar Participantes" />
+					<p:commandButton value="Novo Participante" actionListener="#{manterParticipanteMB.zerarParticipante()}" onclick="PF('loadingDlg').show();" oncomplete="PF('loadingDlg').hide(); PF('partDlg').show();" update=":formTabelaParticipantes:partDlgId" ajax="true" />
+				</p:panelGrid>
+			</h:form>
+		</div>
+		<br />
+		<div class="row">
+			<h:form id="formTabelaParticipantes">
+				<p:dataTable value="#{manterParticipanteMB.listaParticipantes}" var="participante" emptyMessage="Não existem participantes cadastrados" paginator="true" rows="10"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15">
+					
+					<p:column headerText="Nome">
+						<h:outputText value="#{participante.nome}" />
+					</p:column>
+	
+					<p:column headerText="CPF">
+						<h:outputText value="#{participante.username}" />
+					</p:column>
+	
+						<p:column headerText="Ações">
+							<p:commandButton value="Detalhes" icon="ui-icon-bullet" onclick="PF('loadingDlg').show();" oncomplete="PF('loadingDlg').hide(); PF('partDetDlg').show();" update=":formTabelaParticipantes:partDetDlgId" ajax="true">
+								<f:setPropertyActionListener target="#{manterParticipanteMB.participante}" value="#{participante}" />
+<!-- 								<f:param name="participanteId" id="participanteId" value="#{participante.idParticipante}" /> -->
+							</p:commandButton>
+	
+							<p:spacer width="10px" />
+							<p:commandButton value="Alterar" icon="ui-icon-pencil" onclick="PF('loadingDlg').show();" oncomplete="PF('loadingDlg').hide(); PF('partDlg').show();" update=":formTabelaParticipantes:partDlgId" ajax="true">
+								<f:setPropertyActionListener target="#{manterParticipanteMB.participante}"	value="#{participante}" />
+<!-- 								<f:param name="participanteId" id="participanteId" value="#{participante.idParticipante}" /> -->
+							</p:commandButton>
+	
+	<!-- 						<p:spacer width="10px" /> -->
+	<!-- 						<p:commandButton value="Desativar" icon="ui-icon-trash" -->
+	<!-- 							onclick="PF('partDesDlg').show();" update=":dogDeleteDialogForm"> -->
+	<!-- 							<f:setPropertyActionListener target="#{manterParticipanteMB.participante}" value="#{participante}" /> -->
+	<!-- 						</p:commandButton> -->
+						</p:column>
+					</p:dataTable>
+					<ui:include src="/pages/private/manterParticipantes/includes/detalheParticipante.xhtml" />
+					<ui:include src="/pages/private/manterParticipantes/includes/formParticipante.xhtml" />
+					<ui:include src="/pages/private/loadingDialog.xhtml" />
+			</h:form>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(mascaraCPF);
+		</script>
+	</ui:define>
+</ui:composition>
