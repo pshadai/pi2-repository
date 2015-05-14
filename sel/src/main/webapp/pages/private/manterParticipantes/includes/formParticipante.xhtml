@@ -19,8 +19,9 @@
 				<p:message for="cpf" />
 				
 				<p:outputLabel for="selecaoPerfis" value="Selecione os Perfis: " />
-				<p:selectManyCheckbox id="selecaoPerfis" value="#{manterParticipanteMB.perfisSelecionados}" required="true" requiredMessage="Selecione ao menos 1 perfil" layout="grid" columns="2">
+				<p:selectManyCheckbox id="selecaoPerfis" value="#{manterParticipanteMB.perfisSelecionados}" required="true" requiredMessage="Selecione ao menos 1 perfil" layout="grid" columns="2" converter="genericConverter">
 					<f:selectItems value="#{manterParticipanteMB.perfis}" var="perfil" itemLabel="#{perfil.descricao}" itemValue="#{perfil}" />
+					<p:ajax listener="#{manterParticipanteMB.renderizarCamposDeSenha()}" disabled="#{manterParticipanteMB.desabilitarAjaxCheckbox}" />
 				</p:selectManyCheckbox>
 				<p:message for="selecaoPerfis" />
 				
@@ -28,7 +29,7 @@
 				<p:password id="campoSenha" value="#{manterParticipanteMB.participante.password}" />
 				<p:message for="campoSenha" />
 				
-				<p:commandButton value="Salvar" actionListener="#{manterParticipanteMB.salvarOuAlterarParticipante()}" onclick="PF('partDlg').hide();" />
+				<p:commandButton value="Salvar" action="#{manterParticipanteMB.salvarOuAlterarParticipante()}" oncomplete="closeDialogIfSucess(xhr, status, args, partDlg 'partDlgId')" />
 				<p:commandButton value="Fechar" icon="ui-icon-arrow-1-w" actionListener="#{manterParticipanteMB.zerarParticipante()}" onclick="PF('partDlg').hide();" />
 			</p:panelGrid>
 		</h:form>

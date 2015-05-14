@@ -72,4 +72,34 @@ public class Perfil implements GrantedAuthority {
 		return descricao.toString();
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result
+				+ ((idPerfil == null) ? 0 : idPerfil.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Perfil))
+			return false;
+		Perfil other = (Perfil) obj;
+		if (descricao != other.descricao)
+			return false;
+		if (idPerfil == null) {
+			if (other.idPerfil != null)
+				return false;
+		} else if (!idPerfil.equals(other.idPerfil))
+			return false;
+		return true;
+	}
+	
 }

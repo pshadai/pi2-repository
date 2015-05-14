@@ -1,8 +1,11 @@
 package br.upis.sel.view.mb;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
+
+//import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,12 +13,13 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import br.upis.sel.enums.ParticipanteStatus;
+import br.upis.sel.enums.PerfilDescricao;
 import br.upis.sel.model.entity.Participante;
 import br.upis.sel.model.entity.Perfil;
 
 @Component
 @Scope("view")
-@ManagedBean
+//@ManagedBean
 public class ManterParticipanteMB extends AbstractMB {
 	
 	private static final long serialVersionUID = 7859756109388467543L;
@@ -29,6 +33,9 @@ public class ManterParticipanteMB extends AbstractMB {
 	private List<Perfil> perfis = null;
 	private List<Participante> listaParticipantes = null;
 	private Perfil[] perfisSelecionados;
+	
+	private boolean renderizaCampoSenha;
+	private boolean desabilitarAjaxCheckbox;
 	
 	
 	public ManterParticipanteMB() {
@@ -89,6 +96,25 @@ public class ManterParticipanteMB extends AbstractMB {
 		this.perfisSelecionados = perfisSelecionados;
 	}
 
+	public boolean isRenderizaCampoSenha() {
+		return renderizaCampoSenha;
+	}
+
+	public void setRenderizaCampoSenha(boolean renderizaCampoSenha) {
+		this.renderizaCampoSenha = renderizaCampoSenha;
+	}
+
+	public boolean isDesabilitarAjaxCheckbox() {
+		if (this.participante.getIdParticipante() != null) {
+			desabilitarAjaxCheckbox = true;
+		}
+		return desabilitarAjaxCheckbox;
+	}
+
+	public void setDesabilitarAjaxCheckbox(boolean desabilitarAjaxCheckbox) {
+		this.desabilitarAjaxCheckbox = desabilitarAjaxCheckbox;
+	}
+
 	public void zerarParticipante() {
 		System.out.println(participante.getNome());
 		this.participante = new Participante();
@@ -97,15 +123,45 @@ public class ManterParticipanteMB extends AbstractMB {
 	public void salvarOuAlterarParticipante() {
 		try {
 			if (this.participante.getIdParticipante() == null) {
+				List<Perfil> userRole = Arrays.asList(this.perfisSelecionados);
+				this.participante.setPerfis(new ArrayList<Perfil>());
+				this.participante.getPerfis().addAll(userRole);
 				this.facade.incluirParticipante(this.participante);
 				this.getMessage("Participante adicionado com sucesso");
 			} else {
+				this.participante.getPerfis().clear();
+				List<Perfil> userRole = Arrays.asList(this.perfisSelecionados);
+				this.participante.getPerfis().addAll(userRole);
 				this.facade.alterarParticipante(this.participante, ParticipanteStatus.ATIVO);
 				this.getMessage("Participante alterado com sucesso");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			this.getError("Erro ao adicionar ou alterar participante");
+		}
+	}
+	
+	public void desativarParticipante() {
+		try {
+			this.facade.alterarParticipante(this.participante, ParticipanteStatus.INATIVO);
+			this.getMessage("Participante desativado com sucesso");
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.getError("Erro ao desativar participante");
+		}
+	}
+	
+	public void prepararAlteracao() {
+		this.perfisSelecionados = this.participante.getPerfis().toArray(new Perfil[this.participante.getPerfis().size()]);	
+	}
+	
+	public void renderizarCamposDeSenha() {
+		for (int i = 0; i < perfisSelecionados.length; i++) {
+			Perfil perfil = this.perfisSelecionados[i];
+			if (perfil.getDescricao().equals(PerfilDescricao.ROLE_ADMINISTRADOR)) {
+				this.renderizaCampoSenha = true;
+				break;
+			}
 		}
 	}
 	

@@ -1,6 +1,6 @@
 package br.upis.sel.view.mb;
 
-import javax.faces.bean.ManagedBean;
+//import javax.faces.bean.ManagedBean;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,7 +10,7 @@ import br.upis.sel.model.entity.Participante;
 
 @Component
 @Scope("session")
-@ManagedBean
+//@ManagedBean
 public class ParticipanteSession {
 	
 	private Participante participante;

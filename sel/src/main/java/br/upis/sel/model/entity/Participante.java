@@ -150,13 +150,6 @@ public class Participante implements UserDetails {
 		int result = 1;
 		result = prime * result
 				+ ((idParticipante == null) ? 0 : idParticipante.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result
-				+ ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((perfis == null) ? 0 : perfis.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		result = prime * result
-				+ ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 
@@ -173,31 +166,6 @@ public class Participante implements UserDetails {
 			if (other.idParticipante != null)
 				return false;
 		} else if (!idParticipante.equals(other.idParticipante))
-			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (perfis == null) {
-			if (other.perfis != null)
-				return false;
-		} else if (!perfis.equals(other.perfis))
-			return false;
-		if (status == null) {
-			if (other.status != null)
-				return false;
-		} else if (!status.equals(other.status))
-			return false;
-		if (username == null) {
-			if (other.username != null)
-				return false;
-		} else if (!username.equals(other.username))
 			return false;
 		return true;
 	}
