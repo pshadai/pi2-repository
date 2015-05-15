@@ -18,6 +18,7 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -53,6 +54,7 @@ public class Participante implements UserDetails {
 	private String password;
 	
 	@Column(name = "participante_cpf")
+	@CPF
 	private String username;
 	
 	@Column(name = "participante_status")

@@ -61,6 +61,9 @@ public class ManterParticipanteBOImpl implements ManterParticipanteBO {
 			p.setStatus(ParticipanteStatus.ATIVO);
 		}
 		
+		String cpfFormatado = this.retirarMascaraCPF(p.getUsername());
+		p.setUsername(cpfFormatado);
+		
 		for (Perfil perfil : p.getPerfis()) {
 			if (perfil.getDescricao().equals(PerfilDescricao.ROLE_ADMINISTRADOR)) {
 				if (p.getPassword() != null || !p.getPassword().equals("")) {
@@ -76,7 +79,7 @@ public class ManterParticipanteBOImpl implements ManterParticipanteBO {
 		this.participanteDAO.save(p);
 	}
 
-	public String criptografarSenha(String psw) {
+	private String criptografarSenha(String psw) {
 		ShaPasswordEncoder encoder = new ShaPasswordEncoder(256);
 		return encoder.encodePassword(psw, null);
 	}
@@ -94,5 +97,10 @@ public class ManterParticipanteBOImpl implements ManterParticipanteBO {
 		participante.getPerfis().addAll(p.getPerfis());
 		
 		this.incluirParticipante(participante);
+	}
+	
+	private String retirarMascaraCPF(String cpf) {
+		String somenteNumeros = cpf.replace(".", "").replace("-", "");
+		return somenteNumeros;
 	}
 }

@@ -118,6 +118,7 @@ public class ManterParticipanteMB extends AbstractMB {
 	public void zerarParticipante() {
 		System.out.println(participante.getNome());
 		this.participante = new Participante();
+		this.perfisSelecionados = null;
 	}
 	
 	public void salvarOuAlterarParticipante() {
@@ -135,6 +136,8 @@ public class ManterParticipanteMB extends AbstractMB {
 				this.facade.alterarParticipante(this.participante, ParticipanteStatus.ATIVO);
 				this.getMessage("Participante alterado com sucesso");
 			}
+			this.listaParticipantes = null;
+			this.perfisSelecionados = null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			this.getError("Erro ao adicionar ou alterar participante");
@@ -145,6 +148,7 @@ public class ManterParticipanteMB extends AbstractMB {
 		try {
 			this.facade.alterarParticipante(this.participante, ParticipanteStatus.INATIVO);
 			this.getMessage("Participante desativado com sucesso");
+			this.listaParticipantes = null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			this.getError("Erro ao desativar participante");

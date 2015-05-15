@@ -24,7 +24,6 @@
 		</plugins>
 	</build>
 
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.springframework.security.version>4.0.0.RELEASE</org.springframework.security.version>
@@ -294,6 +293,7 @@
 			<type>pom</type>
 			<scope>compile</scope>
 		</dependency>
+		
 		<!-- Outros -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
@@ -318,7 +318,42 @@
 			<artifactId>guava</artifactId>
 			<version>18.0</version>
 		</dependency>
+		
+<!-- 		<dependency> -->
+<!-- 			<groupId>br.com.caelum.stella</groupId> -->
+<!-- 			<artifactId>caelum-stella</artifactId> -->
+<!-- 			<version>2.1.2</version> -->
+<!-- 		</dependency> -->
 
+		<dependency>
+		    <groupId>br.com.caelum.stella</groupId>
+		    <artifactId>caelum-stella-core</artifactId>
+		    <version>2.1.2</version>
+		</dependency>
+		
+		<dependency>
+    		<groupId>br.com.caelum.stella</groupId>
+    		<artifactId>caelum-stella-bean-validation</artifactId>
+    		<version>2.1.2</version>
+		</dependency>
+		
+		<dependency>
+    		<groupId>br.com.caelum.stella</groupId>
+    		<artifactId>caelum-stella-faces</artifactId>
+    		<version>2.1.2</version>
+		</dependency>
+		
+		<dependency>
+    		<groupId>br.com.caelum.stella</groupId>
+    		<artifactId>caelum-stella-hibernate-user-types</artifactId>
+    		<version>2.1.2</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>br.com.caelum.stella</groupId>
+		    <artifactId>caelum-stella-boleto</artifactId>
+		    <version>2.1.2</version>
+		</dependency>
 		<!-- Spring BOOT -->
 
 		<dependency>

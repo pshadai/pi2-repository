@@ -15,7 +15,7 @@
 				<p:message for="campoNome" />
 				
 				<p:outputLabel for="cpf" value="CPF: " />
-				<p:inputText id="cpf" value="#{manterParticipanteMB.participante.username}" required="true" requiredMessage="Digite o CPF do Participante" />
+				<p:inputMask id="cpf" value="#{manterParticipanteMB.participante.username}" required="true" requiredMessage="Digite o CPF do Participante" mask="999.999.999-99" />
 				<p:message for="cpf" />
 				
 				<p:outputLabel for="selecaoPerfis" value="Selecione os Perfis: " />

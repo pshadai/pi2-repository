@@ -33,7 +33,13 @@
 					</p:column>
 	
 					<p:column headerText="CPF">
-						<h:outputText value="#{participante.username}" />
+						<h:outputText value="#{participante.username}">
+							<f:converter converterId="cpfConverter" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="Situação">
+						<h:outputText value="#{participante.status}" />
 					</p:column>
 	
 						<p:column headerText="Ações">
